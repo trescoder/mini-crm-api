@@ -11,6 +11,7 @@ app.set("port", process.env.PORT);
 app.use(morgan("dev"));
 app.use("/clients", clientRoutes);
 
-app.listen(app.get("port"), () => {
+app.listen(app.get("port"), async () => {
+  await require("./db/db");
   console.log(`Server running on port ${app.get("port")}`);
 });
