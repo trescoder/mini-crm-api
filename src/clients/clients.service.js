@@ -5,7 +5,7 @@ async function findAll({ skip, limit, sortBy }) {
   try {
     return ClientModel.find({})
       .skip(skip ?? 0)
-      .limit(limit ?? 10)
+      .limit(limit ?? 20)
       .sort(sortBy ?? "name");
   } catch (error) {
     throw new Error(error);
@@ -14,6 +14,7 @@ async function findAll({ skip, limit, sortBy }) {
 
 async function registerClient(client) {
   try {
+    client.tel = "(+57) " + client.tel;
     const newClient = await ClientModel.create(client);
     return { status: 201, data: { newClient, success: true } };
   } catch (error) {
@@ -32,7 +33,7 @@ async function searchClient(name, { skip, limit }) {
       name: { $regex: clientRegex, $options: "gi" },
     })
       .skip(skip ?? 0)
-      .limit(limit ?? 10);
+      .limit(limit ?? 20);
     return { status: 200, data: clients };
   } catch (error) {
     throw new Error(error);

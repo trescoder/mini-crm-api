@@ -19,7 +19,7 @@ const clientSchema = new Schema({
     unique: true,
   },
   tel: {
-    type: Number,
+    type: String,
     require: true,
   },
   birthday: {
