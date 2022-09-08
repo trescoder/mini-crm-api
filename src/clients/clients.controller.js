@@ -2,7 +2,8 @@ const { extractClientInfo } = require("../helpers/extract-client-info");
 const clientService = require("./clients.service");
 
 async function getClients(req, res) {
-  const clients = await clientService.findAll();
+  const { skip, limit } = req.query;
+  const clients = await clientService.findAll({ skip, limit });
   res.status(200).json(clients);
 }
 
@@ -13,4 +14,14 @@ async function registerNewClient(req, res) {
   return res.status(status).json(data);
 }
 
-module.exports = { getClients, registerNewClient };
+async function searchClients(req, res) {
+  const { name } = req.params;
+  const { skip, limit } = req.query;
+  const { status, data } = await clientService.searchClient(name, {
+    skip,
+    limit,
+  });
+  return res.status(status).json(data);
+}
+
+module.exports = { getClients, registerNewClient, searchClients };

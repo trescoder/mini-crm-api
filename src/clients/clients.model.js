@@ -44,6 +44,7 @@ const clientSchema = new Schema({
     require: true,
   },
 });
+clientSchema.index({ name: "text" });
 
 const ClientModel = model("Client", clientSchema);
 module.exports = ClientModel;
