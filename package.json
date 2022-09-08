@@ -1,0 +1,29 @@
+{
+  "name": "mini-crm-api",
+  "version": "1.0.0",
+  "description": "Mini CRM",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=production node ./src/app.js",
+    "start:dev": "NODE_ENV=development nodemon ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trescoder/mini-crm-api.git"
+  },
+  "author": "Fernando Orozco",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trescoder/mini-crm-api/issues"
+  },
+  "homepage": "https://github.com/trescoder/mini-crm-api#readme",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.5",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
