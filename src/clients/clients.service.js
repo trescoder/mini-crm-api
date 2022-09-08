@@ -1,11 +1,13 @@
 const { UniqueConstraintError } = require("../helpers/error-db");
 const ClientModel = require("./clients.model");
+const QR_SKIP = +process.env.QR_SKIP;
+const QR_LIMIT = +process.env.QR_LIMIT;
 
 async function findAll({ skip, limit, sortBy }) {
   try {
     return ClientModel.find({})
-      .skip(skip ?? 0)
-      .limit(limit ?? 20)
+      .skip(skip ?? QR_SKIP)
+      .limit(limit ?? QR_LIMIT)
       .sort(sortBy ?? "name");
   } catch (error) {
     throw new Error(error);
@@ -32,8 +34,8 @@ async function searchClient(name, { skip, limit }) {
     const clients = await ClientModel.find({
       name: { $regex: clientRegex, $options: "gi" },
     })
-      .skip(skip ?? 0)
-      .limit(limit ?? 20);
+      .skip(skip ?? QR_SKIP)
+      .limit(limit ?? QR_LIMIT);
     return { status: 200, data: clients };
   } catch (error) {
     throw new Error(error);
