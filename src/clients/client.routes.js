@@ -5,5 +5,6 @@ router.get("/", clientController.getClients);
 router.get("/:name", clientController.searchClients);
 
 router.post("/", clientController.registerNewClient);
+router.delete("/:id", clientController.removeClient);
 
 module.exports = router;

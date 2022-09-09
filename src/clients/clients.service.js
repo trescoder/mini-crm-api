@@ -16,7 +16,6 @@ async function findAll({ skip, limit, sortBy }) {
 
 async function registerClient(client) {
   try {
-    client.tel = "(+57) " + client.tel;
     const newClient = await ClientModel.create(client);
     return { status: 201, data: { newClient, success: true } };
   } catch (error) {
@@ -42,8 +41,17 @@ async function searchClient(name, { skip, limit }) {
   }
 }
 
+async function removeClientById(id) {
+  try {
+    return ClientModel.findOneAndRemove({ _id: id });
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 module.exports = {
   findAll,
   registerClient,
   searchClient,
+  removeClientById,
 };

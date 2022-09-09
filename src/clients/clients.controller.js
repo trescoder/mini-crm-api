@@ -24,4 +24,12 @@ async function searchClients(req, res) {
   return res.status(status).json(data);
 }
 
-module.exports = { getClients, registerNewClient, searchClients };
+async function removeClient(req, res) {
+  const { id } = req.params;
+  await clientService.removeClientById(id);
+  return res
+    .status(200)
+    .json({ msg: "Client removed successfully", success: true });
+}
+
+module.exports = { getClients, registerNewClient, searchClients, removeClient };
