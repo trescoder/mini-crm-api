@@ -16,6 +16,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/clients", clientRoutes);
 
 app.listen(app.get("port"), async () => {
-  await require("./db/db");
+  await require("./db/db")();
   console.log(`Server running on port ${app.get("port")}`);
 });
