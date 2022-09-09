@@ -1,5 +1,5 @@
 const { extractClientInfo } = require("../helpers/extract-client-info");
-const clientService = require("./clients.service");
+const clientService = require("../services/clients.service");
 
 async function getClients(req, res) {
   const { skip, limit } = req.query;

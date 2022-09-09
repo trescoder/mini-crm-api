@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 
-const clientRoutes = require("./clients/client.routes");
+const clientRoutes = require("./routes/client.routes");
 
 app.set("port", process.env.PORT);
 

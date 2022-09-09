@@ -1,5 +1,5 @@
 // const { UniqueConstraintError } = require("../helpers/error-db");
-const ClientModel = require("./clients.model");
+const ClientModel = require("../models/clients.model");
 const QR_SKIP = +process.env.QR_SKIP;
 const QR_LIMIT = +process.env.QR_LIMIT;
 

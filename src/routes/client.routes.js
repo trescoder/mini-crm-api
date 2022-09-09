@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const clientController = require("./clients.controller");
+const clientController = require("../controllers/clients.controller");
 
 router.get("/", clientController.getClients);
 router.get("/:name", clientController.searchClients);
