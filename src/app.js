@@ -12,6 +12,7 @@ app.set("port", process.env.PORT);
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use("/clients", clientRoutes);
 
 app.listen(app.get("port"), async () => {
