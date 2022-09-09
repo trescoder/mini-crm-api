@@ -1,4 +1,4 @@
-const { UniqueConstraintError } = require("../helpers/error-db");
+// const { UniqueConstraintError } = require("../helpers/error-db");
 const ClientModel = require("./clients.model");
 const QR_SKIP = +process.env.QR_SKIP;
 const QR_LIMIT = +process.env.QR_LIMIT;
@@ -19,8 +19,13 @@ async function registerClient(client) {
     const newClient = await ClientModel.create(client);
     return { status: 201, data: { newClient, success: true } };
   } catch (error) {
+    // this error code means constrain violation, if a property must be unique and you try to save it (the same client)
+    // twice this error will be raise
     if (error.code === 11000) {
-      throw new UniqueConstraintError("Email is already is in used");
+      return {
+        status: 400,
+        data: { message: "This email is already taken", success: false },
+      };
     } else {
       throw new Error(error);
     }
