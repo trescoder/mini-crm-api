@@ -1,4 +1,4 @@
-const { model, Schema } = require("mongoose");
+import { model, Schema } from "mongoose";
 
 const clientSchema = new Schema({
   name: {
@@ -46,5 +46,4 @@ const clientSchema = new Schema({
 });
 clientSchema.index({ name: "text" });
 
-const ClientModel = model("Client", clientSchema);
-module.exports = ClientModel;
+export const ClientModel = model("Client", clientSchema);

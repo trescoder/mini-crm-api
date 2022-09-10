@@ -1,24 +1,27 @@
+import { NewClient } from "../interfaces/new-client";
+
 // const { UniqueConstraintError } = require("../helpers/error-db");
 const ClientModel = require("../models/clients.model");
-const QR_SKIP = +process.env.QR_SKIP;
-const QR_LIMIT = +process.env.QR_LIMIT;
+const QR_SKIP = +process.env.QR_SKIP!;
+const QR_LIMIT = +process.env.QR_LIMIT!;
 
-async function findAll({ skip, limit, sortBy }) {
+export async function findAll(skip: number, limit: number, sortBy: string) {
   try {
     return ClientModel.find({})
       .skip(skip ?? QR_SKIP)
       .limit(limit ?? QR_LIMIT)
       .sort(sortBy ?? "name");
   } catch (error) {
-    throw new Error(error);
+    console.log(error);
+    throw new Error("Something went wrong when retrieving all clients");
   }
 }
 
-async function registerClient(client) {
+export async function registerClient(client: NewClient) {
   try {
     const newClient = await ClientModel.create(client);
     return { status: 201, data: { newClient, success: true } };
-  } catch (error) {
+  } catch (error: any) {
     // this error code means constrain violation, if a property must be unique and you try to save it (the same client)
     // twice this error will be raise
     if (error.code === 11000) {
@@ -32,7 +35,7 @@ async function registerClient(client) {
   }
 }
 
-async function searchClient(name, { skip, limit }) {
+export async function searchClient(name: string, skip: number, limit: number) {
   try {
     const clientRegex = new RegExp("^" + name);
     const clients = await ClientModel.find({
@@ -42,22 +45,17 @@ async function searchClient(name, { skip, limit }) {
       .limit(limit ?? QR_LIMIT);
     return { status: 200, data: clients };
   } catch (error) {
-    throw new Error(error);
+    console.log(error);
+    throw new Error("Something went wrong when searching clients");
   }
 }
 
-async function removeClientById(id) {
+export async function removeClientById(id: string) {
   try {
     await ClientModel.findOneAndRemove({ _id: id });
     return { msg: "Client remove successfully", success: true };
   } catch (error) {
-    throw new Error(error);
+    console.log(error);
+    throw new Error("Something went wrong when removing a client");
   }
 }
-
-module.exports = {
-  findAll,
-  registerClient,
-  searchClient,
-  removeClientById,
-};

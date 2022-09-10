@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-async function testConnection() {
+export async function testConnection() {
   try {
     const host = process.env.DB_HOST;
     const port = process.env.DB_PORT;
@@ -8,8 +8,7 @@ async function testConnection() {
     await mongoose.connect(`mongodb://${host}:${port}/${name}`);
     console.log(`Connection with DB successful!`);
   } catch (error) {
-    throw new Error(error);
+    console.log(error);
+    throw new Error("WE couldn't connect to the database");
   }
 }
-
-module.exports = testConnection;

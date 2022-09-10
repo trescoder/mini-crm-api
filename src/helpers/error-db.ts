@@ -1,5 +1,5 @@
-class UniqueConstraintError extends Error {
-  constructor(value) {
+export class UniqueConstraintError extends Error {
+  constructor(value: string) {
     super(`${value}`);
 
     if (Error.captureStackTrace) {
@@ -7,5 +7,3 @@ class UniqueConstraintError extends Error {
     }
   }
 }
-
-module.exports = { UniqueConstraintError };

@@ -1,11 +1,13 @@
 require("dotenv").config();
 
-const express = require("express");
-const morgan = require("morgan");
-const cors = require("cors");
+import express from "express";
+import morgan from "morgan";
+import cors from "cors";
+
 const app = express();
 
-const clientRoutes = require("./routes/client.routes");
+import clientRoutes from "./routes/client.routes";
+import { testConnection } from "./db/db";
 
 app.set("port", process.env.PORT);
 
@@ -16,6 +18,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/clients", clientRoutes);
 
 app.listen(app.get("port"), async () => {
-  await require("./db/db")();
+  await testConnection();
   console.log(`Server running on port ${app.get("port")}`);
 });
