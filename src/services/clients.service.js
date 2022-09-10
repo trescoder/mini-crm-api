@@ -48,7 +48,8 @@ async function searchClient(name, { skip, limit }) {
 
 async function removeClientById(id) {
   try {
-    return ClientModel.findOneAndRemove({ _id: id });
+    await ClientModel.findOneAndRemove({ _id: id });
+    return { msg: "Client remove successfully", success: true };
   } catch (error) {
     throw new Error(error);
   }
