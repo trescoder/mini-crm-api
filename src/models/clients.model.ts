@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-const clientSchema = new Schema({
+export const clientSchema = new Schema({
   name: {
     type: String,
     trim: true,
@@ -43,7 +43,10 @@ const clientSchema = new Schema({
     trim: true,
     require: true,
   },
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
 });
-clientSchema.index({ name: "text" });
 
 export const ClientModel = model("Client", clientSchema);
