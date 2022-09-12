@@ -16,18 +16,18 @@ async function registerNewClient(req: any, res: Response) {
   const clientInfo: NewClient = req.body;
   const { username } = req.user;
   // const { status, data?, msg? } = await clientService.registerClient(clientInfo);
-  const { status, data, msg } = await userService.registerNewClient(
+  const { status, data, msg, success } = await userService.registerNewClient(
     username,
     clientInfo
   );
-  return res.status(status).json({ data, msg });
+  return res.status(status).json({ data, msg, success });
 }
 
 async function removeClient(req: any, res: Response) {
   const { id } = req.params;
   const { username } = req.user;
-  const { status, msg } = await userService.removeClient(username, id);
-  return res.status(status).json({ msg });
+  const { status, msg, success } = await userService.removeClient(username, id);
+  return res.status(status).json({ msg, success });
 }
 
 export default { getClients, registerNewClient, removeClient };

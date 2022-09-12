@@ -30,6 +30,5 @@ export const LocalStrategy = new Strategy(async function verify(
       return cb(null, false, { message: "Incorrect username or password" });
     }
   }
-
   return cb(null, { username: user.username, password: user.password });
 });

@@ -6,7 +6,6 @@ export function checkTokenExistence(
   next: NextFunction
 ) {
   const token = req.headers.authorization?.split(" ")[1];
-
   if (!token) {
     req.logOut((err) => {
       if (err) throw new Error("Something went wrong while logging out");

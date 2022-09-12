@@ -48,13 +48,21 @@ async function registerNewClient(username: string, client: NewClient) {
 
     if (user) {
       if (user.clients.some((client) => client.email === newClient.email)) {
-        return { status: 400, msg: "This email is already taken" };
+        return {
+          status: 400,
+          msg: "This email is already taken",
+          success: false,
+        };
       }
       user.clients.push(newClient);
       await user.save();
-      return { status: 201, data: user };
+      return { status: 201, data: user, success: true };
     } else {
-      return { status: 404, msg: `User with username ${username} nor found` };
+      return {
+        status: 404,
+        msg: `User with username ${username} nor found`,
+        success: false,
+      };
     }
   } catch (error) {
     return { status: 500, msg: error };
@@ -69,14 +77,22 @@ async function removeClient(username: string, id: string) {
       if (index >= 0) {
         user.clients.splice(index, 1);
         await user.save();
-        return { status: 200, msg: "client removed successfully" };
+        return {
+          status: 200,
+          msg: "client removed successfully",
+          success: true,
+        };
       }
-      return { status: 404, msg: `email with id ${id} not found` };
+      return {
+        status: 404,
+        msg: `email with id ${id} not found`,
+        success: false,
+      };
     } else {
-      return { status: 404, msg: "user seems to not exists" };
+      return { status: 404, msg: "user seems to not exists", success: false };
     }
   } catch (error) {
-    return { status: 500, msg: error };
+    return { status: 500, msg: error, success: false };
   }
 }
 
