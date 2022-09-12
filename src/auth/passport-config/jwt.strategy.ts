@@ -7,10 +7,11 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = Constants.JWT_SECRET;
 
 export const JwtStrategy = new Strategy(jwtOptions, async function (
-  jwy_payload,
+  jwt_payload,
   done
 ) {
-  const user = await userService.getUser(jwy_payload.sub);
+  const user = await userService.getUser(jwt_payload.sub);
+
   if (!user) {
     return done(null, false);
   }
