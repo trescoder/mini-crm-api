@@ -10,7 +10,6 @@ const router = Router();
 router.use("/user", userRoutes);
 router.use(
   "/clients",
-  // isLoggedIn,
   checkTokenExistence,
   passport.authenticate("jwt", { session: false }),
   clientRoutes
