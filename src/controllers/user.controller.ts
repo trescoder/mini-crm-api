@@ -14,4 +14,17 @@ async function addUser(req: Request, res: Response) {
   res.status(status).json({ msg });
 }
 
-export const userController = { login, addUser };
+async function logout(req: Request, res: Response) {
+  try {
+    await req.logOut({ keepSessionInfo: false }, (err) => {
+      if (err) throw new Error();
+    });
+    return res.status(200).json({ msg: "logout successfully", success: true });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ msg: "Error while login out", success: false });
+  }
+}
+
+export const userController = { login, addUser, logout };

@@ -1,34 +1,33 @@
 import { Request, Response } from "express";
 import { NewClient } from "../interfaces/new-client";
+import { userService } from "../services/user.service";
 
-const { extractClientInfo } = require("../helpers/extract-client-info");
 const clientService = require("../services/clients.service");
 
-async function getClients(req: Request, res: Response) {
+async function getClients(req: any, res: Response) {
   const { skip, limit } = req.query;
-  const clients = await clientService.findAll(skip, limit);
+  const { username } = req.user;
+  // const clients = await clientService.findAll(skip, limit);
+  const clients = await userService.getClients(username);
   res.status(200).json(clients);
 }
 
-async function registerNewClient(req: Request, res: Response) {
+async function registerNewClient(req: any, res: Response) {
   const clientInfo: NewClient = req.body;
-  const { status, data } = await clientService.registerClient(clientInfo);
-  return res.status(status).json(data);
+  const { username } = req.user;
+  // const { status, data?, msg? } = await clientService.registerClient(clientInfo);
+  const { status, data, msg } = await userService.registerNewClient(
+    username,
+    clientInfo
+  );
+  return res.status(status).json({ data, msg });
 }
 
-async function searchClients(req: Request, res: Response) {
-  const { name } = req.params;
-  const { skip, limit } = req.query;
-  const { status, data } = await clientService.searchClient(name, skip, limit);
-  return res.status(status).json(data);
-}
-
-async function removeClient(req: Request, res: Response) {
+async function removeClient(req: any, res: Response) {
   const { id } = req.params;
-  await clientService.removeClientById(id);
-  return res
-    .status(200)
-    .json({ msg: "Client removed successfully", success: true });
+  const { username } = req.user;
+  const { status, msg } = await userService.removeClient(username, id);
+  return res.status(status).json({ msg });
 }
 
-module.exports = { getClients, registerNewClient, searchClients, removeClient };
+export default { getClients, registerNewClient, removeClient };
